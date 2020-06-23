@@ -6,9 +6,9 @@
   <style>
     img {
       cursor: pointer;
-      width: 80vh;
+      width: 40vh;
     }
-    @media only screen and (max-width: 1200px) {
+    @media only screen and (max-width: 1600px) {
       img {
         cursor: pointer;
         width: 40vh;
@@ -18,6 +18,7 @@
 </head>
 <body>
   <img onclick="update()"></img>
+  <textarea></textarea>
   <script>
     const getIndex = max => String(Math.random() * max).split(".")[0]
     const img = document.querySelector("img")
@@ -39,9 +40,10 @@
 
     // on click
     const update = () => {
+      document.querySelector("textarea").innerHTML = JSON.stringify(available)
       console.log(`UPDATE: available length ${available.length}`)
-      // if (available == null || available.length == 0 || available.length == 1)
-          // location.reload();
+      if (available == null || available.length == 0 || available.length == 1)
+          location.reload();
       const index = getIndex(available.length)
       console.log(`UPDATE: setting img to available[${index}] of available length ${available.length}`)                       
       img.src = `http://${available[index].bucketName}/${available[index].key.replace(" ", "%20")}`
