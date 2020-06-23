@@ -4,20 +4,15 @@
     <meta charset="UTF-8">
     <style>
         img {
-            width: 50vw;
+          width: 50vw;
         }
     </style>
 </head>
 <body>
-<script>
-	let image = ""
-	fetch("data.json")
-		.then(response => response.json())
-		.then(data => {
-			const image = data[Math.floor(Math.random() * data.length)],
-				url = "http://" + image.bucketName + "/" + image.key.replace(" ", "%20")
-			document.querySelector("body").innerHTML += `<img src='${url}'>`
-		});
-</script>
+	<span onclick="update()">update</span>
+
+	<script>
+		const update = () => alert(1)	
+	</script>
 </body>
 </html>
