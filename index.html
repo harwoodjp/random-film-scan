@@ -32,7 +32,7 @@
               available = data.map(d => d)            
           }
           const index = getIndex(available.length)
-          img.src = `http://${available[index].bucketName}/${available[index].key.replace(" ", "%20")}`
+          img.src = `https://s3.amazonaws.com/${available[index].bucketName}/${available[index].key.replace(" ", "%20")}`
           available.splice(index, 1)
           window.localStorage.setItem("data", JSON.stringify(available))
       })
@@ -44,7 +44,7 @@
           location.reload();
       const index = getIndex(available.length)
       // console.log(`UPDATE: setting img to available[${index}] of available length ${available.length}`)                       
-      img.src = `http://${available[index].bucketName}/${available[index].key.replace(" ", "%20")}`
+      img.src = `https://s3.amazonaws.com/${available[index].bucketName}/${available[index].key.replace(" ", "%20")}`
       available.splice(index, 1)          
     }
   </script>
