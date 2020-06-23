@@ -9,16 +9,15 @@
       width: 40vh;
     }
     @media only screen and (max-width: 1600px) {
-      img {
-        cursor: pointer;
-        width: 40vh;
-      }      
+    img {
+      cursor: pointer;
+      width: 40vh;
+    }      
     }
   </style>
 </head>
 <body>
   <img onclick="update()"></img>
-  <textarea></textarea>
   <script>
     const getIndex = max => String(Math.random() * max).split(".")[0]
     const img = document.querySelector("img")
@@ -40,7 +39,6 @@
 
     // on click
     const update = () => {
-      document.querySelector("textarea").innerHTML = JSON.stringify(available)
       console.log(`UPDATE: available length ${available.length}`)
       if (available == null || available.length == 0 || available.length == 1)
           location.reload();
