@@ -12,42 +12,39 @@
     img {
       cursor: pointer;
       width: 40vh;
-    }
+    }      
     }
   </style>
 </head>
 <body>
   <img onclick="update()"></img>
-  <span></span>
   <script>
-    var uniqueString = Math.random().toString(36).substr(2, 9);
     const getIndex = max => String(Math.random() * max).split(".")[0]
     const img = document.querySelector("img")
-    let available = JSON.parse(window.localStorage.getItem(uniqueString))
+    let available = JSON.parse(window.localStorage.getItem("data"))
 
     // on load
     fetch("data.json")
       .then(response => response.json())
       .then(data => {
           if (available == null || available.length == 0 || available.length == 1) {
-              window.localStorage.setItem(uniqueString, JSON.stringify(data))
+              window.localStorage.setItem("data", JSON.stringify(data))
               available = data.map(d => d)            
           }
           const index = getIndex(available.length)
-          img.src = `https://s3.amazonaws.com/${available[index].bucketName}/${available[index].key.replace(" ", "%20")}`
+          img.src = `http://${available[index].bucketName}/${available[index].key.replace(" ", "%20")}`
           available.splice(index, 1)
-          window.localStorage.setItem(uniqueString, JSON.stringify(available))
+          window.localStorage.setItem("data", JSON.stringify(available))
       })
 
     // on click
     const update = () => {
-      document.querySelector("span").innerHTML = available.length
       // console.log(`UPDATE: available length ${available.length}`)
       if (available == null || available.length == 0 || available.length == 1)
           location.reload();
       const index = getIndex(available.length)
       // console.log(`UPDATE: setting img to available[${index}] of available length ${available.length}`)                       
-      img.src = `https://s3.amazonaws.com/${available[index].bucketName}/${available[index].key.replace(" ", "%20")}`
+      img.src = `http://${available[index].bucketName}/${available[index].key.replace(" ", "%20")}`
       available.splice(index, 1)          
     }
   </script>
