@@ -19,20 +19,22 @@
 <body>
   <img onclick="update()"></img>
   <script>
+    const debug = new URL(window.location.href).searchParams.get("debug") ? true : false
     const getIndex = max => String(Math.random() * max).split(".")[0]
     const img = document.querySelector("img")
     let available = JSON.parse(window.localStorage.getItem("data"))
-    console.log(`LOAD: available length ${available.length}`)
+    if (debug) console.log(`LOAD: available length ${available.length}`)
 
     // on load
     fetch("data.json")
       .then(response => response.json())
       .then(data => {
-          console.log(`LOAD: fetched json of size ${data.length}`)
+          if (debug) console.log(`LOAD: fetched json of size ${data.length}`)
           if (available == null || available.length == 0 || available.length == 1) {
               window.localStorage.setItem("data", JSON.stringify(data))
               available = data.map(d => d)
-              console.log(`available.length = ${available.length} data.length = ${data.map(d => d).length}`)
+              if (debug)
+                console.log(`available.length ${available.length}; data.length = ${data.length}`)
           }
           const index = getIndex(available.length)
           img.src = `https://s3.amazonaws.com/${available[index].bucketName}/${available[index].key.replace(" ", "%20")}`
@@ -42,7 +44,7 @@
 
     // on click
     const update = () => {
-      console.log(`UPDATE: available length ${available.length}`)
+      if (debug) console.log(`UPDATE: available length ${available.length}`)
       if (available == null || available.length == 0 || available.length == 1) {
        fetch("data.json")
         .then(response => response.json())
