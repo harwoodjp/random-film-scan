@@ -54,9 +54,11 @@
         })
       }
       const index = getIndex(available.length)
-      // console.log(`UPDATE: setting img to available[${index}] of available length ${available.length}`)                       
+       if (debug)
+        console.log(`UPDATE: setting img to available[${index}] of available length ${available.length}`)  
       img.src = `https://s3.amazonaws.com/${available[index].bucketName}/${available[index].key.replace(" ", "%20")}`
-      available.splice(index, 1)          
+      available.splice(index, 1)
+      window.localStorage.setItem("data", JSON.stringify(available))      
     }
   </script>
 </body>
